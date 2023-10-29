@@ -6,7 +6,7 @@
 * 복사한 새로운 레퍼지토리 주소를 팀원들에게 공유
 
 ## Github 레퍼지토리 복사(모든 팀원)
-* VSCode의 View > Source Control > Clone Repository 선택
+* VSCode의 File > New Window > View > Source Control > Clone Repository 선택
 * 팀장에게 공유받은 레퍼지토리 주소 입력
 * 복사할 적당한 폴더 선택 후 Select as Repository Destination 선택
 * Open 선택
