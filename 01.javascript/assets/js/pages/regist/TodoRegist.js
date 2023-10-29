@@ -10,7 +10,7 @@ const TodoRegist = function(){
   const text = document.createTextNode('등록 화면');
   content.appendChild(text);
 
-  page.appendChild(Header('TODO List 등록'));
+  page.appendChild(Header('TODO App 등록'));
   page.appendChild(content);
   page.appendChild(Footer());
 

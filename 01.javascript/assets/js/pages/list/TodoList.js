@@ -2,6 +2,7 @@
 import Header from '../../layout/Header.js';
 import Footer from '../../layout/Footer.js';
 import TodoRegist from '../regist/TodoRegist.js';
+import TodoInfo from '../info/TodoInfo.js';
 
 const TodoList = async function(){
   const page = document.createElement('div');
@@ -17,11 +18,22 @@ const TodoList = async function(){
     ul.setAttribute('class', 'todolist');
     response.data?.items.forEach(item => {
       const li = document.createElement('li');
+      const todoInfoLink = document.createElement('a');
+      todoInfoLink.setAttribute('href', `info?_id=${item._id}`);
       const title = document.createTextNode(item.title);
-      li.appendChild(title);
+
+      todoInfoLink.addEventListener('click', async function(event){
+        // 브라우저의 기본 동작 취소(<a> 태그 동작 안하도록)
+        event.preventDefault();
+        const infoPage = await TodoInfo({_id: item._id});
+        document.querySelector('#page').replaceWith(infoPage);
+      });
+
+      todoInfoLink.appendChild(title);
+      li.appendChild(todoInfoLink);
       ul.appendChild(li);
     });
-    content.appendChild(ul);    
+    content.appendChild(ul);
 
     const btnRegist = document.createElement('button');
     const btnTitle = document.createTextNode('등록');
@@ -38,7 +50,7 @@ const TodoList = async function(){
     content.appendChild(error);
   }
   
-  page.appendChild(Header('TODO List 등록'));
+  page.appendChild(Header('TODO App 목록 조회'));
   page.appendChild(content);
   page.appendChild(Footer());
   return page;
