@@ -1,4 +1,4 @@
-# 멋쟁이 사자처럼 Front-End School Plus 1기: Javascript 프로젝트(TODO List)
+# 멋쟁이 사자처럼 Front-End School Plus 1기: 미니 프로젝트(TODO App)
 * GitHub URL: (https://github.com/uzoolove/FESP01-JS-Project)
 
 ## 템플릿 프로젝트 fork(팀장만)
@@ -13,10 +13,15 @@
 
 ## 서버 구동
 * 프로젝트 루트에서 실행
-* -s 옵션: 클라이언트가 요청한 모든 URL에 대해서 index.html을 응답함
+<!-- * -s 옵션: 라우터를 추가할 경우 클라이언트가 요청한 모든 URL에 대해서 index.html을 응답하도록 설정 -->
+```
+cd js
+npx serve .
+```
+<!-- * -s 옵션: 라우터를 추가할 경우 클라이언트가 요청한 모든 URL에 대해서 index.html을 응답하도록 설정
 ```
 cd js
 npx serve -s .
-```
+``` -->
 * http://localhost:3000 접속
   - 이미 3000 포트가 사용중일 경우 콘솔 안내 메세지에 따라서 접속
