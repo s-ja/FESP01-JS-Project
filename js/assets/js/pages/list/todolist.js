@@ -1,10 +1,16 @@
 // 할일 목록
-import todoRegist from '../regist/todoRegist.js';
-const todoList = async function(){
-  const todolistNode = document.createElement('div');
-  todolistNode.setAttribute('id', 'content');
+import Header from '../../layout/Header.js';
+import Footer from '../../layout/Footer.js';
+import TodoRegist from '../regist/TodoRegist.js';
+
+const TodoList = async function(){
+  const page = document.createElement('div');
+  page.setAttribute('id', 'page');
+  
+  const content = document.createElement('div');
+  content.setAttribute('id', 'content');
   let response;
-  try{    
+  try{
     response = await axios('http://localhost:33088/api/todolist');
 
     const ul = document.createElement('ul');
@@ -15,28 +21,27 @@ const todoList = async function(){
       li.appendChild(title);
       ul.appendChild(li);
     });
-    todolistNode.appendChild(ul);    
+    content.appendChild(ul);    
 
     const btnRegist = document.createElement('button');
     const btnTitle = document.createTextNode('등록');
     btnRegist.appendChild(btnTitle);
-    todolistNode.appendChild(btnRegist);
+    content.appendChild(btnRegist);
 
     btnRegist.addEventListener('click', () => {
-      const todoRegistNode = todoRegist();
-      const headerTitle = document.querySelector('header > h1');
-      headerTitle.innerHTML = 'TODO List 등록';      
-      const container = document.querySelector('#container');
-      todolistNode.remove();
-      container.insertBefore(todoRegistNode, document.querySelector('footer'));      
+      const registPage = TodoRegist();
+      document.querySelector('#page').replaceWith(registPage);
     });
 
   }catch(err){
     const error = document.createTextNode('일시적인 오류 발생');
-    todolistNode.appendChild(error);
+    content.appendChild(error);
   }
   
-  return todolistNode;
+  page.appendChild(Header('TODO List 등록'));
+  page.appendChild(content);
+  page.appendChild(Footer());
+  return page;
 };
 
-export default todoList;
+export default TodoList;

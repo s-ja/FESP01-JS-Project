@@ -1,9 +1,20 @@
 // 할일 등록
-const todoRegist = function(){
-  const registNode = document.createElement('div');
+import Header from '../../layout/Header.js';
+import Footer from '../../layout/Footer.js';
+
+const TodoRegist = function(){
+  const page = document.createElement('div');
+  page.setAttribute('id', 'page');
+
+  const content = document.createElement('div');
   const text = document.createTextNode('등록 화면');
-  registNode.appendChild(text);
-  return registNode;
+  content.appendChild(text);
+
+  page.appendChild(Header('TODO List 등록'));
+  page.appendChild(content);
+  page.appendChild(Footer());
+
+  return page;
 };
 
-export default todoRegist;
+export default TodoRegist;

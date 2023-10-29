@@ -1,4 +1,4 @@
-const footer = function(){
+const Footer = function(){
   const footerNode = document.createElement('footer');
   const pNode = document.createElement('p');
   const content = document.createTextNode('FESP 1기 Javascript Project');
@@ -7,4 +7,4 @@ const footer = function(){
   return footerNode;
 };
 
-export default footer;
+export default Footer;

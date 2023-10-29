@@ -1,4 +1,4 @@
-const header = function(title){
+const Header = function(title){
   const headerNode = document.createElement('header');
   const h1 = document.createElement('h1');
   const headerTitle = document.createTextNode(title);
@@ -7,4 +7,4 @@ const header = function(title){
   return headerNode;
 };
 
-export default header;
+export default Header;
