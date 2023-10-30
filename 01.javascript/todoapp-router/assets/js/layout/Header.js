@@ -1,9 +1,13 @@
-const Header = function(title){
-  const headerNode = document.createElement('header');
-  const h1 = document.createElement('h1');
+const Header = function (title) {
+  const headerNode = document.createElement("header");
+  const h2 = document.createElement("h2");
+  const mainTitle = document.createElement("h1");
   const headerTitle = document.createTextNode(title);
-  h1.appendChild(headerTitle);
-  headerNode.appendChild(h1);
+  mainTitle.textContent = "TODO 4 ME";
+
+  h2.appendChild(headerTitle);
+  headerNode.appendChild(mainTitle);
+  headerNode.appendChild(h2);
   return headerNode;
 };
 
