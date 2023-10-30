@@ -15,7 +15,7 @@
 * 프로젝트 루트에서 실행
 <!-- * -s 옵션: 라우터를 추가할 경우 클라이언트가 요청한 모든 URL에 대해서 index.html을 응답하도록 설정 -->
 ```
-cd 01.javascript
+cd 01.javascript/todoapp
 npx serve .
 ```
 <!-- * -s 옵션: 라우터를 추가할 경우 클라이언트가 요청한 모든 URL에 대해서 index.html을 응답하도록 설정
