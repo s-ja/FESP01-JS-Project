@@ -3,6 +3,7 @@ import Header from '../../layout/Header.js';
 import Footer from '../../layout/Footer.js';
 import TodoRegist from '../regist/TodoRegist.js';
 import TodoInfo from '../info/TodoInfo.js';
+import {linkTo} from '../../Router.js';
 
 const TodoList = async function(){
   const page = document.createElement('div');
@@ -22,11 +23,12 @@ const TodoList = async function(){
       todoInfoLink.setAttribute('href', `info?_id=${item._id}`);
       const title = document.createTextNode(item.title);
 
-      todoInfoLink.addEventListener('click', async function(event){
+      todoInfoLink.addEventListener('click',function(event){
         // 브라우저의 기본 동작 취소(<a> 태그 동작 안하도록)
         event.preventDefault();
-        const infoPage = await TodoInfo({_id: item._id});
-        document.querySelector('#page').replaceWith(infoPage);
+        linkTo(todoInfoLink.getAttribute('href'));
+        // const infoPage = TodoInfo({_id: item._id});
+        // document.querySelector('#page').replaceWith(infoPage);
       });
 
       todoInfoLink.appendChild(title);
@@ -38,12 +40,13 @@ const TodoList = async function(){
     const btnRegist = document.createElement('button');
     btnRegist.setAttribute('id', 'buttonCommon');
     const btnTitle = document.createTextNode('등록');
+
     btnRegist.appendChild(btnTitle);
     content.appendChild(btnRegist);
 
     btnRegist.addEventListener('click', () => {
-      const registPage = TodoRegist();
-      document.querySelector('#page').replaceWith(registPage);
+      linkTo('regist');
+      // document.querySelector('#page').replaceWith(registPage);
     });
 
   }catch(err){
