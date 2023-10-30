@@ -41,6 +41,22 @@ const TodoInfo = async function ({ _id } = {}) {
   detailFooterDelete.setAttribute("id", "detailFooterDelete");
   const btndelete = document.createTextNode("삭제");
 
+  detailFooterDelete.addEventListener("click", async () => {
+    let response;
+    console.log("hihihi");
+    try {
+      response = await axios.delete(
+        `http://localhost:33088/api/todolist/${_id}`
+      );
+      console.log(response);
+      alert("삭제되었습니다");
+      location.reload();
+      // list로 이동
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
   detail.appendChild(detailHeader);
   detailHeader.appendChild(detailHeaderTitle);
   detailHeader.appendChild(detailHeaderCreatedAt);
