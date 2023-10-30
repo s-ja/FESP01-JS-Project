@@ -2,7 +2,10 @@
 import Header from "../../layout/Header.js";
 import Footer from "../../layout/Footer.js";
 
-const TodoInfo = async function ({ _id } = {}) {
+// const TodoInfo = async function ({ _id } = {}) {
+const TodoInfo = async function () {
+  const params = new URLSearchParams(location.search);
+  const _id = params.get("_id");
   const page = document.createElement("div");
   page.setAttribute("id", "page");
 
