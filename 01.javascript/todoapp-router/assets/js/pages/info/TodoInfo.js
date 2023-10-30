@@ -9,6 +9,24 @@ const TodoInfo = async function () {
   const page = document.createElement("div");
   page.setAttribute("id", "page");
 
+  /**
+   *
+   * @param {HTMLElement} parent append할 요소
+   * @param {string} tagName 생성할 태그이름
+   * @param {string[]} attribute 설정할 속성
+   * @param {string} txt 텍스트
+   */
+
+  const createElem = (parent, tagName, attribute = [], txt) => {
+    const [target, setTarget] = attribute;
+
+    const $tag = document.createElement(tagName);
+    $tag.setAttribute(target, setTarget);
+    txt && ($tag.textContent = txt);
+
+    parent.appendChild($tag);
+  };
+
   const content = document.createElement("div");
   content.setAttribute("id", "content");
 
