@@ -36,6 +36,7 @@ const TodoList = async function(){
     content.appendChild(ul);
 
     const btnRegist = document.createElement('button');
+    btnRegist.setAttribute('id', 'buttonCommon');
     const btnTitle = document.createTextNode('등록');
     btnRegist.appendChild(btnTitle);
     content.appendChild(btnRegist);
@@ -50,7 +51,7 @@ const TodoList = async function(){
     content.appendChild(error);
   }
   
-  page.appendChild(Header('TODO App 목록 조회'));
+  page.appendChild(Header('목록조회'));
   page.appendChild(content);
   page.appendChild(Footer());
   return page;
