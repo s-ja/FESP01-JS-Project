@@ -53,7 +53,8 @@ const TodoInfo = async function () {
       );
       console.log(response);
       alert("삭제되었습니다");
-      location.reload();
+      //   location.reload();
+      window.history.back();
       // list로 이동
     } catch (err) {
       console.log(err);
