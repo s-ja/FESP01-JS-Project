@@ -56,7 +56,7 @@ const TodoInfo = async function ({ _id } = {}) {
   detailFooterEdit.appendChild(btnEdit);
 
   let response;
-  
+
   try {
     response = await axios(`http://localhost:33088/api/todolist/${_id}`);
     console.log(response);
@@ -66,14 +66,13 @@ const TodoInfo = async function ({ _id } = {}) {
     const contents = document.createTextNode(response.data.item.content);
     const updatedAt = document.createTextNode(response.data.item.updatedAt);
     const updatedAtTxt = document.createTextNode("updatedAt ");
-    
+
     detailHeaderTitle.appendChild(title);
     detailHeaderCreatedAt.appendChild(createdAtTxt);
     detailHeaderCreatedAt.appendChild(createdAt);
     detailMainContent.appendChild(contents);
     detailMainUpdatedAt.appendChild(updatedAtTxt);
     detailMainUpdatedAt.appendChild(updatedAt);
-    
   } catch (err) {
     const error = document.createTextNode("일시적인 오류 발생");
     detail.appendChild(error, err);
