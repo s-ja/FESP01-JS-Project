@@ -2,9 +2,30 @@
 import Header from "../../layout/Header.js";
 import Footer from "../../layout/Footer.js";
 
-const TodoInfo = async function ({ _id } = {}) {
+// const TodoInfo = async function ({ _id } = {}) {
+const TodoInfo = async function () {
+  const params = new URLSearchParams(location.search);
+  const _id = params.get("_id");
   const page = document.createElement("div");
   page.setAttribute("id", "page");
+
+  /**
+   *
+   * @param {HTMLElement} parent append할 요소
+   * @param {string} tagName 생성할 태그이름
+   * @param {string[]} attribute 설정할 속성
+   * @param {string} txt 텍스트
+   */
+
+  const createElem = (parent, tagName, attribute = [], txt) => {
+    const [target, setTarget] = attribute;
+
+    const $tag = document.createElement(tagName);
+    $tag.setAttribute(target, setTarget);
+    txt && ($tag.textContent = txt);
+
+    parent.appendChild($tag);
+  };
 
   const content = document.createElement("div");
   content.setAttribute("id", "content");
@@ -40,6 +61,23 @@ const TodoInfo = async function ({ _id } = {}) {
   const detailFooterDelete = document.createElement("button");
   detailFooterDelete.setAttribute("id", "detailFooterDelete");
   const btndelete = document.createTextNode("삭제");
+
+  detailFooterDelete.addEventListener("click", async () => {
+    let response;
+    console.log("hihihi");
+    try {
+      response = await axios.delete(
+        `http://localhost:33088/api/todolist/${_id}`
+      );
+      console.log(response);
+      alert("삭제되었습니다");
+      //   location.reload();
+      window.history.back();
+      // list로 이동
+    } catch (err) {
+      console.log(err);
+    }
+  });
 
   detail.appendChild(detailHeader);
   detailHeader.appendChild(detailHeaderTitle);
