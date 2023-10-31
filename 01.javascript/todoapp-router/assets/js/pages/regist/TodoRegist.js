@@ -32,7 +32,17 @@ const TodoRegist = function () {
   const registerTitle = document.createTextNode("등록 완료");
   newRegister.appendChild(registerTitle);
   
- 
+  
+  const modal = document.createElement("div");
+  modal.classList.add("modal");
+  modal.style.display = "none"; 
+
+  const modalContent = document.createElement("div");
+  modalContent.classList.add("modal-content");
+  const modalText = document.createTextNode("할일이 등록되었습니다 !");
+  modalContent.appendChild(modalText);
+  modal.appendChild(modalContent);
+
   
       inputForm.addEventListener("submit", async function (event) {
         event.preventDefault(); 
@@ -42,7 +52,11 @@ const TodoRegist = function () {
         try {
           const response = await axios.post('http://localhost:33088/api/todolist', { title, content });
     console.log(response.data); 
-      alert("등록이 완료되었습니다.");
+      modal.style.display = "block"; 
+            setTimeout(() => {
+                modal.style.display = "none";
+                linkTo("/");
+            }, 3000);
         } catch (error) {
           console.error(error);
           alert("등록에 실패하였습니다.");
@@ -58,6 +72,7 @@ const TodoRegist = function () {
   fieldset.appendChild(input);
   fieldset.appendChild(textarea);
   fieldset.appendChild(newRegister);
+  page.appendChild(modal);
   page.appendChild(Footer());
 
 
