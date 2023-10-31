@@ -22,11 +22,10 @@ const TodoList = async function () {
       const checkbox = document.createElement("input");
       checkbox.setAttribute("type", "checkbox");
       checkbox.setAttribute("id", "checkbox");
-      console.log(item);
-      console.log(item.done);
-      // if (item.done) {
-      //   checkbox.setAttribute("checked");
-      // }
+
+      if (item.done) {
+        checkbox.setAttribute("checked", "true");
+      }
 
       const todoInfoLink = document.createElement("a");
       todoInfoLink.setAttribute("href", `info?_id=${item._id}`);
