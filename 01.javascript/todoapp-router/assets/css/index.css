@@ -19,17 +19,20 @@
   box-sizing: border-box;
   position: relative;
   overflow: scroll;
+  width: 100%;
   padding: 10px;
   height: 443px;
-  width: 100%;
   background-color: violet;
 }
 .todolist {
-  /* background-color: gray; */
-  /* overflow: scroll; */
-  /* height: 715px; */
-  overflow: hidden;
+  margin: 0;
   padding: 0;
+  overflow: auto;
+  height: 360px;
+}
+.todolist li {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 #buttonCommon {
@@ -68,7 +71,7 @@
   padding: 15px;
   box-sizing: border-box;
   width: 360px;
-  height: 443px;
+  height: 300px;
   border: 0;
   border-radius: 10px;
   padding-left: 15px;
