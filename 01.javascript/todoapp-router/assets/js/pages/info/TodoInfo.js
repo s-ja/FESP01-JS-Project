@@ -6,6 +6,7 @@ import Footer from "../../layout/Footer.js";
 const TodoInfo = async function () {
   const params = new URLSearchParams(location.search);
   const _id = params.get("_id");
+
   const page = document.createElement("div");
   page.setAttribute("id", "page");
 
@@ -77,6 +78,10 @@ const TodoInfo = async function () {
     } catch (err) {
       console.log(err);
     }
+  });
+
+  detailFooterEdit.addEventListener("click", function () {
+    location.href = `update?_id=${_id}`;
   });
 
   detail.appendChild(detailHeader);
