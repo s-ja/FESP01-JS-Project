@@ -40,7 +40,7 @@ const TodoUpdate = async function () {
 
   const submitButton = document.createElement("button");
   submitButton.textContent = "수정하기";
-  contentInput.setAttribute("class", "inverted");
+  submitButton.setAttribute("id", "editBtn");
 
   content.appendChild(editForm);
   editForm.appendChild(updateHeader);
