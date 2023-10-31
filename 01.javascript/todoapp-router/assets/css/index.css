@@ -1,12 +1,35 @@
+/* @import url("https://fonts.googleapis.com/css2?family=inter&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap");
+/*  ------------init ------------ */
+
+* {
+  font-family: "inter";
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* --------------------------- */
+
+header > h1 {
+  font-weight: 900;
+  font-size: 68px;
+  margin-top: 80px;
+}
+
+header > h2 {
+  text-align: center;
+  font-size: 36px;
+  font-weight: 400;
+}
+
 #page {
-  background-color: aquamarine;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-items: center;
   justify-content: space-between;
   width: 386px;
-  border: 1px solid gray;
   height: 100%;
   top: 50%;
   left: 50%;
@@ -16,35 +39,77 @@
 }
 
 #content {
-  box-sizing: border-box;
   position: relative;
-  overflow: scroll;
   width: 100%;
   padding: 10px;
-  height: 443px;
-  background-color: violet;
+  height: 715px;
+  background-color: #555555;
+  border-radius: 10px;
 }
 .todolist {
   margin: 0;
   padding: 0;
   overflow: auto;
-  height: 360px;
+  height: 90%;
+  border-radius: 5px;
+  margin-top: 5px;
 }
 .todolist li {
   width: 100%;
-  box-sizing: border-box;
+  display: flex;
+  gap: 20px;
+  text-align: center;
+}
+
+.todolist li a {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+  text-overflow: ellipsis;
+}
+
+.thisLi > a {
+  text-decoration: line-through;
+  color: white;
+  text-decoration-color: #9c0000;
+}
+
+.thisLi {
+  background-color: #555555;
+  border: 1px solid white;
 }
 
 #buttonCommon {
   position: absolute;
   width: 360px;
-  height: 55px;
+  height: 50px;
   left: 50%;
   right: 50%;
   bottom: 10px;
   transform: translateX(-50%);
   border-radius: 10px;
   border: 0;
+  font-size: 30px;
+  font-weight: bold;
+  color: #555555;
+  cursor: pointer;
+}
+
+#buttonCommon:hover {
+  background-color: #555555;
+  color: white;
+  border: 1px solid white;
+}
+
+#buttonCommon:focus {
+  outline-style: none;
+  box-shadow: none;
+  border-color: transparent;
+}
+
+#form {
+  height: 100%;
 }
 
 #fieldset {
@@ -55,10 +120,30 @@
   padding: 0;
   border: 0;
   row-gap: 10px;
-  height: 100%;
+  height: 90%;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
 }
+
+#fieldset > #input,
+#fieldset > #textarea {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  width: 100%;
+}
+
+#fieldset *:focus {
+  outline-style: none;
+  box-shadow: none;
+  border-color: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
 #input {
-  box-sizing: border-box;
   width: 360px;
   height: 52px;
   border-radius: 10px;
@@ -69,9 +154,8 @@
 
 #textarea {
   padding: 15px;
-  box-sizing: border-box;
   width: 360px;
-  height: 300px;
+  height: 100%;
   border: 0;
   border-radius: 10px;
   padding-left: 15px;
@@ -142,7 +226,6 @@ input[type="checkbox"]:checked {
   flex-shrink: 0;
 }
 li {
-  box-sizing: border-box;
   padding-left: 5px;
   padding-right: 5px;
   list-style: none;
@@ -184,7 +267,6 @@ a {
 /* -----------detail----------- */
 #detail * {
   margin: 0;
-  box-sizing: border-box;
 }
 
 #detail {
@@ -203,7 +285,7 @@ a {
 
 #detailHeaderTitle {
   font-size: 26px;
-  font-weight: bolder;
+  font-weight: 300;
 }
 
 #detailHeaderCreatedAt {
@@ -247,14 +329,26 @@ a {
   cursor: pointer;
 }
 
+#detailFooter > button:focus {
+  outline-style: none;
+  box-shadow: none;
+  border-color: transparent;
+}
+
 #detailFooterDelete {
   color: #9c0000;
 }
 
-#test {
-  width: 100px;
-  height: 100px;
-  background-color: red;
+#detailFooterDelete:hover {
+  background-color: #9c0000;
+  color: white;
+  border: 1px solid white;
+}
+
+#detailFooterEdit:hover {
+  background-color: #555555;
+  color: white;
+  border: 1px solid white;
 }
 
 /* -----------update----------- */
@@ -293,6 +387,8 @@ a {
   border-color: transparent;
 }
 
-.inverted {
-  color: #555555;
+#editBtn:hover {
+  background-color: #555;
+  color: white;
+  border: 1px solid white;
 }

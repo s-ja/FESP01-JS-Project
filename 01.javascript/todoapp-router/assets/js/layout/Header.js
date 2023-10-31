@@ -5,6 +5,10 @@ const Header = function (title) {
   const headerTitle = document.createTextNode(title);
   mainTitle.textContent = "TODO 4 ME";
 
+  mainTitle.addEventListener("click", () => {
+    location.href = "/";
+  });
+
   h2.appendChild(headerTitle);
   headerNode.appendChild(mainTitle);
   headerNode.appendChild(h2);

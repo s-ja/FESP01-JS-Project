@@ -25,6 +25,7 @@ const TodoList = async function () {
 
       if (item.done) {
         checkbox.setAttribute("checked", "true");
+        li.classList.add("thisLi");
       }
 
       const todoInfoLink = document.createElement("a");
@@ -52,11 +53,9 @@ const TodoList = async function () {
           alert("수정완료");
 
           if (this.checked) {
-            todoInfoLink.style.color = "red";
-            todoInfoLink.style.textDecoration = "line-through";
+            li.classList.add("thisLi");
           } else {
-            todoInfoLink.style.color = "";
-            todoInfoLink.style.textDecoration = "none";
+            li.classList.remove("thisLi");
           }
         } catch (err) {
           console.log(err);
