@@ -10,6 +10,7 @@ const TodoInfo = async function () {
   const page = document.createElement("div");
   page.setAttribute("id", "page");
 
+  //   ! for reFactor
   /**
    *
    * @param {HTMLElement} parent append할 요소
@@ -27,6 +28,7 @@ const TodoInfo = async function () {
 
     parent.appendChild($tag);
   };
+  //   ! for reFactor
 
   const content = document.createElement("div");
   content.setAttribute("id", "content");
