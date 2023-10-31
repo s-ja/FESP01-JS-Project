@@ -19,19 +19,33 @@ const TodoList = async function(){
     ul.setAttribute('class', 'todolist');
     response.data?.items.forEach(item => {
       const li = document.createElement('li');
+      const checkbox = document.createElement('input');
+  checkbox.setAttribute('type', 'checkbox');
+  checkbox.setAttribute('id', 'checkbox');
       const todoInfoLink = document.createElement('a');
       todoInfoLink.setAttribute('href', `info?_id=${item._id}`);
       const title = document.createTextNode(item.title);
 
       todoInfoLink.addEventListener('click',function(event){
-        // 브라우저의 기본 동작 취소(<a> 태그 동작 안하도록)
         event.preventDefault();
         linkTo(todoInfoLink.getAttribute('href'));
-        // const infoPage = TodoInfo({_id: item._id});
-        // document.querySelector('#page').replaceWith(infoPage);
+        
       });
+      
+  checkbox.addEventListener('change', function() {
+    if(this.checked) {
+      todoInfoLink.style.color = 'red';
+      todoInfoLink.style.textDecoration = 'line-through';
+    } else {
+      todoInfoLink.style.color = '';
+      todoInfoLink.style.textDecoration = 'none';
+
+    }
+  });
+
 
       todoInfoLink.appendChild(title);
+      li.appendChild(checkbox);
       li.appendChild(todoInfoLink);
       ul.appendChild(li);
     });

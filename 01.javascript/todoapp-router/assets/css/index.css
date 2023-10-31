@@ -18,15 +18,20 @@
 #content {
   box-sizing: border-box;
   position: relative;
+  overflow: scroll;
   padding: 10px;
-  height: 715px;
+  /* height: 443px; */
   width: 100%;
   background-color: violet;
 }
 .todolist {
-  background-color: gray;
+  /* background-color: gray; */
+  /* overflow: scroll; */
+  /* height: 715px; */
   overflow: hidden;
+  padding: 0;
 }
+
 #buttonCommon {
   position: absolute;
   width: 360px;
@@ -37,9 +42,6 @@
   transform: translateX(-50%);
   border-radius: 10px;
   border: 0;
-}
-#form {
-  /* background-color: red; */
 }
 
 #fieldset {
@@ -53,6 +55,7 @@
   height: 100%;
 }
 #input {
+  box-sizing: border-box;
   width: 360px;
   height: 52px;
   border-radius: 10px;
@@ -62,6 +65,7 @@
 }
 
 #textarea {
+  padding: 15px;
   box-sizing: border-box;
   width: 360px;
   height: 443px;
@@ -69,10 +73,98 @@
   border-radius: 10px;
   padding-left: 15px;
   padding-right: 15px;
+  resize: none;
 }
 
-/* -----------detail----------- */
+::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: #555555;
+  font-size: 18px;
+  font-weight: 900;
+}
+::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #555555;
+  font-size: 18px;
+  font-weight: 900;
+}
+:-ms-input-placeholder {
+  /* IE 10+ */
+  color: #555555;
+  font-size: 18px;
+  font-weight: 900;
+}
+:-moz-placeholder {
+  /* Firefox 18- */
+  color: #555555;
+  font-size: 18px;
+  font-weight: 900;
+}
 
+#input::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  text-align: center;
+}
+#input::-moz-placeholder {
+  /* Firefox 19+ */
+  text-align: center;
+}
+#input:-ms-input-placeholder {
+  /* IE 10+ */
+  text-align: center;
+}
+#input:-moz-placeholder {
+  /* Firefox 18- */
+  text-align: center;
+}
+
+input[type="checkbox"] {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid #555;
+  appearance: none;
+  cursor: pointer;
+  flex-shrink: 0;
+
+  /* transition: background 0.2s; */
+}
+input[type="checkbox"]:checked {
+  /* background: #32e732; */
+
+  background-image: url(../img/RedArrow.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  flex-shrink: 0;
+}
+li {
+  box-sizing: border-box;
+  padding-left: 5px;
+  padding-right: 5px;
+  list-style: none;
+  font-size: 100px;
+  font-weight: 300;
+  font-size: 18px;
+  width: 360px;
+  height: 52px;
+  display: flex;
+  vertical-align: middle;
+  align-items: center;
+  border-radius: 10px;
+  background-color: white;
+  gap: 10px;
+  margin-bottom: 15px;
+  font-style: normal;
+  overflow: hidden;
+  text-wrap: nowrap;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  /* -----------detail----------- */
+}
 #detail * {
   margin: 0;
   box-sizing: border-box;
