@@ -4,25 +4,7 @@ import Footer from '../../layout/Footer';
 import { linkTo } from '../../Router';
 import axios from 'axios';
 
-const createElem = (
-  parent: HTMLElement,
-  tagName: string,
-  txt: string = '',
-  ...attributes: [string, string][]
-) => {
-  const element = document.createElement(tagName);
-
-  attributes.forEach(([attrName, attrValue]) => {
-    element.setAttribute(attrName, attrValue);
-  });
-
-  if (txt) {
-    element.textContent = txt;
-  }
-
-  parent.appendChild(element);
-  return element; // 생성된 요소 반환
-};
+import createElem from '../../utils/CreateElem';
 
 const TodoList = async function () {
   const page = document.createElement('div');
