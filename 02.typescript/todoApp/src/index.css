@@ -24,6 +24,10 @@ header > h2 {
   font-weight: 400;
 }
 
+footer {
+  margin-bottom: 50px;
+}
+
 #page {
   display: flex;
   flex-direction: column;
