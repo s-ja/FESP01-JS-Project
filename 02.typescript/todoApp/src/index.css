@@ -402,4 +402,10 @@ a {
 
 .modal {
   display: none;
+  width: 300px;
+  text-align: center;
+  border: 2px solid black;
+  background-color: #acacac;
+  color: #fff;
+  font-weight: 700;
 }
