@@ -1,33 +1,35 @@
 // 할일 등록
 import axios from "axios";
-
 import Header from "../../layout/Header";
 import Footer from "../../layout/Footer";
+import createElem from "../../utils/CreateElem";
+
+const fetchTodoItem = async (_id: string): Promise<TodoItem> => {
+  try {
+    const response = await axios.get<TodoItem>(
+      `http://localhost:33088/api/todolist/${_id}`
+    );
+    console.log(response.data);
+
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to fetch the todo item.");
+  }
+};
+
+const deleteTodoItem = async (_id: string): Promise<void> => {
+  try {
+    await axios.delete(`http://localhost:33088/api/todolist/${_id}`);
+    alert("삭제되었습니다.");
+    window.location.href = "/"; // 페이지를 루트로 리다이렉션
+  } catch (error) {
+    alert("삭제에 실패했습니다.");
+  }
+};
 
 const TodoInfo = async function () {
   const params = new URLSearchParams(location.search);
   const _id = params.get("_id");
-
-  const createElem = (
-    parent: HTMLElement,
-    tagName: string,
-    attribute?: [string, string],
-    txt: string = ""
-  ) => {
-    const element = document.createElement(tagName);
-
-    if (attribute) {
-      const [target, setTarget] = attribute;
-      element.setAttribute(target, setTarget);
-    }
-
-    if (txt) {
-      element.textContent = txt;
-    }
-
-    parent.appendChild(element);
-    return element; // 생성된 요소 반환
-  };
 
   let response;
 
@@ -36,8 +38,8 @@ const TodoInfo = async function () {
       `http://localhost:33088/api/todolist/${_id}`
     );
     const title = response.data.item.title;
-    const createdAt = "createdAt " + response.data.item.createdAt;
-    const updatedAt = response.data.item.updatedAt;
+    const createdAt = "Created at: " + response.data.item.createdAt;
+    const updatedAt = "Updated at: " + response.data.item.updatedAt;
     const contents = response.data.item.content;
 
     const page = document.createElement("div");
@@ -46,59 +48,47 @@ const TodoInfo = async function () {
     const content = document.createElement("div");
     content.id = "content";
 
-    const detail = createElem(content, "div", ["id", "detail"]);
+    const detail = createElem(content, "div", "", ["id", "detail"]);
 
-    const detailHeader = createElem(detail, "div", ["id", "detailHeader"]);
+    const detailHeader = createElem(detail, "div", "", ["id", "detailHeader"]);
 
-    const detailHeaderTitle = createElem(
-      detailHeader,
-      "div",
-      ["id", "detailHeaderTitle"],
-      title
-    );
+    const detailHeaderTitle = createElem(detailHeader, "div", title, [
+      "id",
+      "detailHeaderTitle",
+    ]);
 
-    const detailHeaderCreatedAt = createElem(
-      detailHeader,
-      "div",
-      ["id", "detailHeaderCreatedAt"],
-      createdAt
-    );
+    const detailHeaderCreatedAt = createElem(detailHeader, "div", createdAt, [
+      "id",
+      "detailHeaderCreatedAt",
+    ]);
 
-    const detailMain = createElem(detail, "div", ["id", "detailMain"]);
+    const detailMain = createElem(detail, "div", "", ["id", "detailMain"]);
 
-    const detailMainContent = createElem(
-      detailMain,
-      "span",
-      ["id", "detailMainContent"],
-      contents
-    );
+    const detailMainContent = createElem(detailMain, "span", contents, [
+      "id",
+      "detailMainContent",
+    ]);
 
-    const detailMainUpdatedAt = createElem(
-      detailMain,
-      "p",
-      ["id", "detailMainUpdatedAt"],
-      updatedAt
-    );
+    const detailMainUpdatedAt = createElem(detailMain, "p", updatedAt, [
+      "id",
+      "detailMainUpdatedAt",
+    ]);
 
-    const detailFooter = createElem(detail, "div", ["id", "detailFooter"]);
+    const detailFooter = createElem(detail, "div", "", ["id", "detailFooter"]);
 
-    const detailFooterEdit = createElem(
-      detailFooter,
-      "button",
-      ["id", "detailFooterEdit"],
-      "수정"
-    );
+    const detailFooterEdit = createElem(detailFooter, "button", "수정", [
+      "id",
+      "detailFooterEdit",
+    ]);
 
     detailFooterEdit.addEventListener("click", function () {
       location.href = `update?_id=${_id}`;
     });
 
-    const detailFooterDelete = createElem(
-      detailFooter,
-      "button",
-      ["id", "detailFooterDelete"],
-      "삭제"
-    );
+    const detailFooterDelete = createElem(detailFooter, "button", "삭제", [
+      "id",
+      "detailFooterDelete",
+    ]);
 
     detailFooterDelete.addEventListener("click", async () => {
       let response;
