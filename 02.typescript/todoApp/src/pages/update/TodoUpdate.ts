@@ -1,60 +1,40 @@
-// 할일 수정
-import axios from "axios";
-import { linkTo } from "../../Router";
+import axios from 'axios';
+import { linkTo } from '../../Router';
+import Header from '../../layout/Header';
+import Footer from '../../layout/Footer';
 
-import Header from "../../layout/Header";
-import Footer from "../../layout/Footer";
+const createElem = (
+  parent: HTMLElement,
+  tagName: string,
+  txt: string = '',
+  ...attributes: [string, string][]
+) => {
+  const element = document.createElement(tagName);
+
+  attributes.forEach(([attrName, attrValue]) => {
+    element.setAttribute(attrName, attrValue);
+  });
+
+  if (txt) {
+    element.textContent = txt;
+  }
+
+  parent.appendChild(element);
+  return element; // 생성된 요소 반환
+};
 
 const TodoUpdate = async function () {
-  const params = new URLSearchParams(location.search);
-  const _id = params.get("_id");
+  const _id = new URLSearchParams(location.search).get('_id');
 
-  const page = document.createElement("div");
-  page.setAttribute("id", "page");
+  const page = document.createElement('div');
+  page.setAttribute('id', 'page');
 
-  const content = document.createElement("div");
-  content.setAttribute("id", "content");
+  const content = document.createElement('div');
+  content.setAttribute('id', 'content');
 
-  const editForm = document.createElement("form");
-  editForm.setAttribute("id", "detail");
+  const { editForm, titleInput, contentInput, updateUpdatedAt } =
+    createFormElement(content);
 
-  const updateHeader = document.createElement("div");
-  updateHeader.setAttribute("id", "updateHeader");
-
-  const detailFooter = document.createElement("div");
-  detailFooter.setAttribute("id", "detailFooter");
-
-  const titleInput = document.createElement("input");
-  titleInput.setAttribute("name", "title");
-  titleInput.setAttribute("autofocus", "");
-
-  const updateUpdatedAt = document.createElement("p");
-  updateUpdatedAt.setAttribute("id", "detailHeaderCreatedAt");
-
-  const contentInput = document.createElement("textarea");
-  contentInput.setAttribute("name", "content");
-  contentInput.setAttribute("id", "detailMain");
-  //   const doneInput = document.createElement("input");
-  //   doneInput.setAttribute("type", "checkbox");
-  //   doneInput.setAttribute("name", "done");
-
-  const submitButton = document.createElement("button");
-  submitButton.textContent = "수정하기";
-  submitButton.setAttribute("id", "editBtn");
-
-  content.appendChild(editForm);
-  editForm.appendChild(updateHeader);
-
-  updateHeader.appendChild(titleInput);
-  updateHeader.appendChild(updateUpdatedAt);
-
-  editForm.appendChild(contentInput);
-  //   editForm.appendChild(doneInput);
-
-  editForm.appendChild(detailFooter);
-  detailFooter.appendChild(submitButton);
-
-  // 기존의 항목을 가져옵니다.
   try {
     const response = await axios.get<TodoResponse>(
       `http://localhost:33088/api/todolist/${_id}`
@@ -63,43 +43,70 @@ const TodoUpdate = async function () {
 
     titleInput.value = item.title;
     contentInput.value = item.content;
-    updateUpdatedAt.innerText = item.updatedAt;
-    // doneInput.checked = item.done;
+    updateUpdatedAt.innerText = `Last updated: ${item.updatedAt}`;
   } catch (err) {
     console.error(err);
-    alert("항목을 불러오는 데 실패했습니다.");
+    alert('항목을 불러오는 데 실패했습니다.');
   }
 
-  editForm.addEventListener("submit", async function (e) {
+  editForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
-    const title = formData.get("title");
-    const content = formData.get("content");
-    // const done = e.target.done.checked;
+    const title = formData.get('title');
+    const content = formData.get('content');
 
     try {
-      const response = await axios.patch<TodoListResponse>(
+      await axios.patch<TodoListResponse>(
         `http://localhost:33088/api/todolist/${_id}`,
         {
           title,
           content,
-          //   done,
         }
       );
-      // 수정이 성공하면 사용자에게 알림을 표시하고 리스트 페이지로 돌아갑니다.
-      alert("수정되었습니다.");
-      linkTo("/"); // 리스트 페이지로 이동
+      alert('수정되었습니다.');
+      linkTo('/');
     } catch (err) {
       console.error(err);
-      alert("서버 오류!");
+      alert('서버 오류!');
     }
   });
 
-  page.appendChild(Header("수정하기"));
+  page.appendChild(Header('수정하기'));
   page.appendChild(content);
   page.appendChild(Footer());
 
   return page;
 };
+
+// 폼 요소 생성 함수
+function createFormElement(parent: HTMLElement) {
+  const editForm = createElem(parent, 'form', '', ['id', 'detail']);
+  const updateHeader = createElem(editForm, 'div', '', ['id', 'updateHeader']);
+  const titleInput = createElem(
+    updateHeader,
+    'input',
+    '',
+    ['name', 'title'],
+    ['autofocus', '']
+  ) as HTMLInputElement;
+  const updateUpdatedAt = createElem(updateHeader, 'p', '', [
+    'id',
+    'detailHeaderCreatedAt',
+  ]) as HTMLParagraphElement;
+  const contentInput = createElem(
+    editForm,
+    'textarea',
+    '',
+    ['name', 'content'],
+    ['id', 'detailMain']
+  ) as HTMLTextAreaElement;
+  const detailFooter = createElem(editForm, 'div', '', ['id', 'detailFooter']);
+  const submitButton = createElem(detailFooter, 'button', '수정하기', [
+    'id',
+    'editBtn',
+  ]);
+
+  return { editForm, titleInput, contentInput, updateUpdatedAt };
+}
 
 export default TodoUpdate;

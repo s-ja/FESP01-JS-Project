@@ -1,10 +1,28 @@
 // 할일 목록
 import Header from '../../layout/Header';
 import Footer from '../../layout/Footer';
-import TodoRegist from '../regist/TodoRegist';
-import TodoInfo from '../info/TodoInfo';
 import { linkTo } from '../../Router';
 import axios from 'axios';
+
+const createElem = (
+  parent: HTMLElement,
+  tagName: string,
+  txt: string = '',
+  ...attributes: [string, string][]
+) => {
+  const element = document.createElement(tagName);
+
+  attributes.forEach(([attrName, attrValue]) => {
+    element.setAttribute(attrName, attrValue);
+  });
+
+  if (txt) {
+    element.textContent = txt;
+  }
+
+  parent.appendChild(element);
+  return element; // 생성된 요소 반환
+};
 
 const TodoList = async function () {
   const page = document.createElement('div');
@@ -13,49 +31,53 @@ const TodoList = async function () {
   const content = document.createElement('div');
   content.setAttribute('id', 'content');
   let response;
+
   try {
     response = await axios<TodoListResponse>(
       'http://localhost:33088/api/todolist'
     );
 
-    const ul = document.createElement('ul');
-    ul.setAttribute('class', 'todolist');
-    response.data?.items.forEach((item) => {
-      const li = document.createElement('li');
-      const checkbox = document.createElement('input');
-      checkbox.setAttribute('type', 'checkbox');
-      checkbox.setAttribute('id', 'checkbox');
+    const ul = createElem(content, 'ul', '', ['class', 'todolist']);
+    response.data.items.forEach((item) => {
+      const li = createElem(ul, 'li');
+      const checkbox = createElem(
+        li,
+        'input',
+        '',
+        ['type', 'checkbox'],
+        ['id', 'checkbox']
+      ) as HTMLInputElement;
 
       if (item.done) {
-        checkbox.setAttribute('checked', 'true');
+        checkbox.checked = true;
         li.classList.add('thisLi');
       }
 
-      const todoInfoLink = document.createElement('a');
-      todoInfoLink.setAttribute('href', `info?_id=${item._id}`);
+      const todoInfoLink = createElem(li, 'a', '', [
+        'href',
+        `info?_id=${item._id}`,
+      ]);
       const title = document.createTextNode(item.title);
 
-      todoInfoLink.addEventListener('click', function (event) {
+      todoInfoLink.addEventListener('click', (event) => {
         event.preventDefault();
         linkTo(todoInfoLink.getAttribute('href')!);
       });
 
-      checkbox.addEventListener('change', async function () {
+      checkbox.addEventListener('change', async () => {
         try {
           const body = {
             title: item.title,
             content: item.content,
             done: !item.done,
           };
-          console.log(body);
-          let response = await axios.patch(
+          const patchResponse = await axios.patch(
             `http://localhost:33088/api/todolist/${item._id}`,
             body
           );
-          console.log(response);
-          alert('수정완료');
+          console.log(patchResponse);
 
-          if (this.checked) {
+          if (checkbox.checked) {
             li.classList.add('thisLi');
           } else {
             li.classList.remove('thisLi');
@@ -66,22 +88,17 @@ const TodoList = async function () {
       });
 
       todoInfoLink.appendChild(title);
-      li.appendChild(checkbox);
-      li.appendChild(todoInfoLink);
       ul.appendChild(li);
     });
     content.appendChild(ul);
 
-    const btnRegist = document.createElement('button');
-    btnRegist.setAttribute('id', 'buttonCommon');
+    const btnRegist = createElem(content, 'button', '', ['id', 'buttonCommon']);
     const btnTitle = document.createTextNode('등록');
-
     btnRegist.appendChild(btnTitle);
     content.appendChild(btnRegist);
 
     btnRegist.addEventListener('click', () => {
       linkTo('regist');
-      // document.querySelector('#page').replaceWith(registPage);
     });
   } catch (err) {
     const error = document.createTextNode('일시적인 오류 발생');
