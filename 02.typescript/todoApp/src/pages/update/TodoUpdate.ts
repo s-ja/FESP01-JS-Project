@@ -1,5 +1,5 @@
 // 할일 수정
-
+import axios from "axios";
 import { linkTo } from "../../Router";
 
 import Header from "../../layout/Header";
@@ -56,7 +56,7 @@ const TodoUpdate = async function () {
 
   // 기존의 항목을 가져옵니다.
   try {
-    const response = await axios.get(
+    const response = await axios.get<TodoResponse>(
       `http://localhost:33088/api/todolist/${_id}`
     );
     const item = response.data.item;
@@ -72,13 +72,13 @@ const TodoUpdate = async function () {
 
   editForm.addEventListener("submit", async function (e) {
     e.preventDefault();
-
-    const title = e.target.title.value;
-    const content = e.target.content.value;
+    const formData = new FormData(e.target as HTMLFormElement);
+    const title = formData.get("title");
+    const content = formData.get("content");
     // const done = e.target.done.checked;
 
     try {
-      const response = await axios.patch(
+      const response = await axios.patch<TodoListResponse>(
         `http://localhost:33088/api/todolist/${_id}`,
         {
           title,
