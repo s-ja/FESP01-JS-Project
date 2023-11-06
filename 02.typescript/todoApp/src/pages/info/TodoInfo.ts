@@ -4,6 +4,8 @@ import axios from "axios";
 import Header from "../../layout/Header";
 import Footer from "../../layout/Footer";
 
+import createElem from "../../utils/CreateElem";
+
 const TodoInfo = async function () {
   const params = new URLSearchParams(location.search);
   const _id = params.get("_id");
@@ -11,15 +13,14 @@ const TodoInfo = async function () {
   const createElem = (
     parent: HTMLElement,
     tagName: string,
-    attribute?: [string, string],
-    txt: string = ""
+    txt: string = "",
+    ...attributes: [string, string][]
   ) => {
     const element = document.createElement(tagName);
 
-    if (attribute) {
-      const [target, setTarget] = attribute;
-      element.setAttribute(target, setTarget);
-    }
+    attributes.forEach(([attrName, attrValue]) => {
+      element.setAttribute(attrName, attrValue);
+    });
 
     if (txt) {
       element.textContent = txt;
@@ -36,8 +37,8 @@ const TodoInfo = async function () {
       `http://localhost:33088/api/todolist/${_id}`
     );
     const title = response.data.item.title;
-    const createdAt = "createdAt " + response.data.item.createdAt;
-    const updatedAt = response.data.item.updatedAt;
+    const createdAt = "Created at: " + response.data.item.createdAt;
+    const updatedAt = "Updated at: " + response.data.item.updatedAt;
     const contents = response.data.item.content;
 
     const page = document.createElement("div");
@@ -46,59 +47,47 @@ const TodoInfo = async function () {
     const content = document.createElement("div");
     content.id = "content";
 
-    const detail = createElem(content, "div", ["id", "detail"]);
+    const detail = createElem(content, "div", "", ["id", "detail"]);
 
-    const detailHeader = createElem(detail, "div", ["id", "detailHeader"]);
+    const detailHeader = createElem(detail, "div", "", ["id", "detailHeader"]);
 
-    const detailHeaderTitle = createElem(
-      detailHeader,
-      "div",
-      ["id", "detailHeaderTitle"],
-      title
-    );
+    const detailHeaderTitle = createElem(detailHeader, "div", title, [
+      "id",
+      "detailHeaderTitle",
+    ]);
 
-    const detailHeaderCreatedAt = createElem(
-      detailHeader,
-      "div",
-      ["id", "detailHeaderCreatedAt"],
-      createdAt
-    );
+    const detailHeaderCreatedAt = createElem(detailHeader, "div", createdAt, [
+      "id",
+      "detailHeaderCreatedAt",
+    ]);
 
-    const detailMain = createElem(detail, "div", ["id", "detailMain"]);
+    const detailMain = createElem(detail, "div", "", ["id", "detailMain"]);
 
-    const detailMainContent = createElem(
-      detailMain,
-      "span",
-      ["id", "detailMainContent"],
-      contents
-    );
+    const detailMainContent = createElem(detailMain, "span", contents, [
+      "id",
+      "detailMainContent",
+    ]);
 
-    const detailMainUpdatedAt = createElem(
-      detailMain,
-      "p",
-      ["id", "detailMainUpdatedAt"],
-      updatedAt
-    );
+    const detailMainUpdatedAt = createElem(detailMain, "p", updatedAt, [
+      "id",
+      "detailMainUpdatedAt",
+    ]);
 
-    const detailFooter = createElem(detail, "div", ["id", "detailFooter"]);
+    const detailFooter = createElem(detail, "div", "", ["id", "detailFooter"]);
 
-    const detailFooterEdit = createElem(
-      detailFooter,
-      "button",
-      ["id", "detailFooterEdit"],
-      "수정"
-    );
+    const detailFooterEdit = createElem(detailFooter, "button", "수정", [
+      "id",
+      "detailFooterEdit",
+    ]);
 
     detailFooterEdit.addEventListener("click", function () {
       location.href = `update?_id=${_id}`;
     });
 
-    const detailFooterDelete = createElem(
-      detailFooter,
-      "button",
-      ["id", "detailFooterDelete"],
-      "삭제"
-    );
+    const detailFooterDelete = createElem(detailFooter, "button", "삭제", [
+      "id",
+      "detailFooterDelete",
+    ]);
 
     detailFooterDelete.addEventListener("click", async () => {
       let response;
