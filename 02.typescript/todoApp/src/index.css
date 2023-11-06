@@ -15,6 +15,7 @@ header > h1 {
   font-weight: 900;
   font-size: 68px;
   margin-top: 80px;
+  cursor: pointer;
 }
 
 header > h2 {
