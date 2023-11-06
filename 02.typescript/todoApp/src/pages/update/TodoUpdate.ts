@@ -3,6 +3,26 @@ import { linkTo } from '../../Router';
 import Header from '../../layout/Header';
 import Footer from '../../layout/Footer';
 
+const createElem = (
+  parent: HTMLElement,
+  tagName: string,
+  txt: string = '',
+  ...attributes: [string, string][]
+) => {
+  const element = document.createElement(tagName);
+
+  attributes.forEach(([attrName, attrValue]) => {
+    element.setAttribute(attrName, attrValue);
+  });
+
+  if (txt) {
+    element.textContent = txt;
+  }
+
+  parent.appendChild(element);
+  return element; // 생성된 요소 반환
+};
+
 const TodoUpdate = async function () {
   const _id = new URLSearchParams(location.search).get('_id');
 
@@ -13,8 +33,7 @@ const TodoUpdate = async function () {
   content.setAttribute('id', 'content');
 
   const { editForm, titleInput, contentInput, updateUpdatedAt } =
-    createFormElement();
-  content.appendChild(editForm);
+    createFormElement(content);
 
   try {
     const response = await axios.get<TodoResponse>(
@@ -60,38 +79,32 @@ const TodoUpdate = async function () {
 };
 
 // 폼 요소 생성 함수
-function createFormElement() {
-  const editForm = document.createElement('form');
-  editForm.setAttribute('id', 'detail');
-
-  const updateHeader = document.createElement('div');
-  updateHeader.setAttribute('id', 'updateHeader');
-
-  const detailFooter = document.createElement('div');
-  detailFooter.setAttribute('id', 'detailFooter');
-
-  const titleInput = document.createElement('input');
-  titleInput.setAttribute('name', 'title');
-  titleInput.setAttribute('autofocus', '');
-
-  const updateUpdatedAt = document.createElement('p');
-  updateUpdatedAt.setAttribute('id', 'detailHeaderCreatedAt');
-
-  const contentInput = document.createElement('textarea');
-  contentInput.setAttribute('name', 'content');
-  contentInput.setAttribute('id', 'detailMain');
-
-  const submitButton = document.createElement('button');
-  submitButton.textContent = '수정하기';
-  submitButton.setAttribute('id', 'editBtn');
-
-  // 생성된 요소들을 폼에 추가
-  updateHeader.appendChild(titleInput);
-  updateHeader.appendChild(updateUpdatedAt);
-  detailFooter.appendChild(submitButton);
-  editForm.appendChild(updateHeader);
-  editForm.appendChild(contentInput);
-  editForm.appendChild(detailFooter);
+function createFormElement(parent: HTMLElement) {
+  const editForm = createElem(parent, 'form', '', ['id', 'detail']);
+  const updateHeader = createElem(editForm, 'div', '', ['id', 'updateHeader']);
+  const titleInput = createElem(
+    updateHeader,
+    'input',
+    '',
+    ['name', 'title'],
+    ['autofocus', '']
+  ) as HTMLInputElement;
+  const updateUpdatedAt = createElem(updateHeader, 'p', '', [
+    'id',
+    'detailHeaderCreatedAt',
+  ]) as HTMLParagraphElement;
+  const contentInput = createElem(
+    editForm,
+    'textarea',
+    '',
+    ['name', 'content'],
+    ['id', 'detailMain']
+  ) as HTMLTextAreaElement;
+  const detailFooter = createElem(editForm, 'div', '', ['id', 'detailFooter']);
+  const submitButton = createElem(detailFooter, 'button', '수정하기', [
+    'id',
+    'editBtn',
+  ]);
 
   return { editForm, titleInput, contentInput, updateUpdatedAt };
 }
