@@ -1,4 +1,3 @@
-// 할일 수정
 import axios from 'axios';
 import { linkTo } from '../../Router';
 import Header from '../../layout/Header';
@@ -13,6 +12,55 @@ const TodoUpdate = async function () {
   const content = document.createElement('div');
   content.setAttribute('id', 'content');
 
+  const { editForm, titleInput, contentInput, updateUpdatedAt } =
+    createFormElement();
+  content.appendChild(editForm);
+
+  try {
+    const response = await axios.get<TodoResponse>(
+      `http://localhost:33088/api/todolist/${_id}`
+    );
+    const item = response.data.item;
+
+    titleInput.value = item.title;
+    contentInput.value = item.content;
+    updateUpdatedAt.innerText = `Last updated: ${item.updatedAt}`;
+  } catch (err) {
+    console.error(err);
+    alert('항목을 불러오는 데 실패했습니다.');
+  }
+
+  editForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    const title = formData.get('title');
+    const content = formData.get('content');
+
+    try {
+      await axios.patch<TodoListResponse>(
+        `http://localhost:33088/api/todolist/${_id}`,
+        {
+          title,
+          content,
+        }
+      );
+      alert('수정되었습니다.');
+      linkTo('/');
+    } catch (err) {
+      console.error(err);
+      alert('서버 오류!');
+    }
+  });
+
+  page.appendChild(Header('수정하기'));
+  page.appendChild(content);
+  page.appendChild(Footer());
+
+  return page;
+};
+
+// 폼 요소 생성 함수
+function createFormElement() {
   const editForm = document.createElement('form');
   editForm.setAttribute('id', 'detail');
 
@@ -37,58 +85,15 @@ const TodoUpdate = async function () {
   submitButton.textContent = '수정하기';
   submitButton.setAttribute('id', 'editBtn');
 
-  content.appendChild(editForm);
-  editForm.appendChild(updateHeader);
-
+  // 생성된 요소들을 폼에 추가
   updateHeader.appendChild(titleInput);
   updateHeader.appendChild(updateUpdatedAt);
-
-  editForm.appendChild(contentInput);
-
-  editForm.appendChild(detailFooter);
   detailFooter.appendChild(submitButton);
+  editForm.appendChild(updateHeader);
+  editForm.appendChild(contentInput);
+  editForm.appendChild(detailFooter);
 
-  try {
-    const response = await axios.get<TodoResponse>(
-      `http://localhost:33088/api/todolist/${_id}`
-    );
-    const item = response.data.item;
-
-    titleInput.value = item.title;
-    contentInput.value = item.content;
-    updateUpdatedAt.innerText = item.updatedAt;
-  } catch (err) {
-    console.error(err);
-    alert('항목을 불러오는 데 실패했습니다.');
-  }
-
-  editForm.addEventListener('submit', async function (e) {
-    e.preventDefault();
-    const formData = new FormData(e.target as HTMLFormElement);
-    const title = formData.get('title');
-    const content = formData.get('content');
-
-    try {
-      const response = await axios.patch<TodoListResponse>(
-        `http://localhost:33088/api/todolist/${_id}`,
-        {
-          title,
-          content,
-        }
-      );
-      alert('수정되었습니다.');
-      linkTo('/');
-    } catch (err) {
-      console.error(err);
-      alert('서버 오류!');
-    }
-  });
-
-  page.appendChild(Header('수정하기'));
-  page.appendChild(content);
-  page.appendChild(Footer());
-
-  return page;
-};
+  return { editForm, titleInput, contentInput, updateUpdatedAt };
+}
 
 export default TodoUpdate;
