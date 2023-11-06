@@ -46,31 +46,22 @@ const TodoRegist = function () {
 
   const modalContent = createElem(modal, "div", "할일이 등록되었습니다!", ["class", "modal-content"]);
 
-  // const modal = document.createElement("div");
-  // modal.classList.add("modal");
-  // modal.style.display = "none";
-
-  // const modalContent = document.createElement("div");
-  // modalContent.classList.add("modal-content");
-  // const modalText = document.createTextNode("할일이 등록되었습니다!");
-  // modalContent.appendChild(modalText);
-  // modal.appendChild(modalContent);
-
   form.addEventListener("submit", async function (event) {
+
     event.preventDefault();
-    // const title = input.value;
-    // const content = content.value;
-    // const title = (event.target as HTMLFormElement).elements.namedItem("title").value;
-    const title = input.value;
-    const content = textarea.value;
-    // const content = (event.target as HTMLFormElement).elements.namedItem("content").value;
+
+    const titleInput = input as HTMLInputElement;
+    const contentInput = textarea as HTMLInputElement;
+
+    const title = titleInput.value;
+    const content = contentInput.value;
 
     try {
       const response = await axios.post("http://localhost:33088/api/todolist", {
         title,
         content,
       });
-      console.log(response.data);
+
       modal.style.display = "block";
       setTimeout(() => {
         modal.style.display = "none";
@@ -84,12 +75,6 @@ const TodoRegist = function () {
 
   page.appendChild(Header("TODO App 등록"));
   page.appendChild(content);
-  // content.appendChild(form);
-  // form.appendChild(fieldset);
-  // fieldset.appendChild(input);
-  // fieldset.appendChild(textarea);
-  // fieldset.appendChild(newRegister);
-  // page.appendChild(modal);
   page.appendChild(Footer());
 
   return page;
