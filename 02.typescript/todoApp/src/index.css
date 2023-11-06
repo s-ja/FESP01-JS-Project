@@ -1,9 +1,9 @@
 /* @import url("https://fonts.googleapis.com/css2?family=inter&display=swap"); */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
 /*  ------------init ------------ */
 
 * {
-  font-family: "inter";
+  font-family: 'inter';
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -205,7 +205,7 @@ header > h2 {
   text-align: center;
 }
 
-input[type="checkbox"] {
+input[type='checkbox'] {
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -216,7 +216,7 @@ input[type="checkbox"] {
 
   /* transition: background 0.2s; */
 }
-input[type="checkbox"]:checked {
+input[type='checkbox']:checked {
   /* background: #32e732; */
 
   background-image: url(../img/RedArrow.svg);
@@ -391,4 +391,10 @@ a {
   background-color: #555;
   color: white;
   border: 1px solid white;
+}
+
+/* -------------------modal------------------- */
+
+.modal {
+  display: none;
 }
