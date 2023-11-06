@@ -4,6 +4,26 @@ import Footer from '../../layout/Footer';
 import { linkTo } from '../../Router';
 import axios from 'axios';
 
+const createElem = (
+  parent: HTMLElement,
+  tagName: string,
+  txt: string = '',
+  ...attributes: [string, string][]
+) => {
+  const element = document.createElement(tagName);
+
+  attributes.forEach(([attrName, attrValue]) => {
+    element.setAttribute(attrName, attrValue);
+  });
+
+  if (txt) {
+    element.textContent = txt;
+  }
+
+  parent.appendChild(element);
+  return element; // 생성된 요소 반환
+};
+
 const TodoList = async function () {
   const page = document.createElement('div');
   page.setAttribute('id', 'page');
@@ -17,21 +37,26 @@ const TodoList = async function () {
       'http://localhost:33088/api/todolist'
     );
 
-    const ul = document.createElement('ul');
-    ul.setAttribute('class', 'todolist');
+    const ul = createElem(content, 'ul', '', ['class', 'todolist']);
     response.data.items.forEach((item) => {
-      const li = document.createElement('li');
-      const checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      checkbox.id = 'checkbox';
+      const li = createElem(ul, 'li');
+      const checkbox = createElem(
+        li,
+        'input',
+        '',
+        ['type', 'checkbox'],
+        ['id', 'checkbox']
+      ) as HTMLInputElement;
 
       if (item.done) {
         checkbox.checked = true;
         li.classList.add('thisLi');
       }
 
-      const todoInfoLink = document.createElement('a');
-      todoInfoLink.href = `info?_id=${item._id}`;
+      const todoInfoLink = createElem(li, 'a', '', [
+        'href',
+        `info?_id=${item._id}`,
+      ]);
       const title = document.createTextNode(item.title);
 
       todoInfoLink.addEventListener('click', (event) => {
@@ -63,16 +88,12 @@ const TodoList = async function () {
       });
 
       todoInfoLink.appendChild(title);
-      li.appendChild(checkbox);
-      li.appendChild(todoInfoLink);
       ul.appendChild(li);
     });
     content.appendChild(ul);
 
-    const btnRegist = document.createElement('button');
-    btnRegist.id = 'buttonCommon';
+    const btnRegist = createElem(content, 'button', '', ['id', 'buttonCommon']);
     const btnTitle = document.createTextNode('등록');
-
     btnRegist.appendChild(btnTitle);
     content.appendChild(btnRegist);
 
