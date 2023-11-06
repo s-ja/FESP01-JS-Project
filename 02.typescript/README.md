@@ -4,22 +4,20 @@
 
 ### Vite
 
-- Vite: Webpack, Rollup, Parcel 등의 도구처럼 자바스크립트 기반의 프로젝트 개발, 빌드, 배포에 사용하는 도구
-- ESM 방식의 번들링으로 인해 프로젝트 빌드 및 개발서버의 성능이 기존 도구들 보다 빠름
+- Vite: Webpack, Rollup, Parcel 등의 도구처럼 자바스크립트 프로젝트 개발, 빌드, 배포에 사용하는 번들링 도구
 - 프로젝트 종류에 따라서 기본 환경을 세팅해주는 보일러 플레이트 제공
-  - Vanilla JavaScript, Vanilla TypeScript, Vue, React, Preact, Lit, Svelte, Solid, Qwik 등
 
 ### 번들링 도구가 필요한 이유
 
-- 타입스크립트 프로젝트 배포시 필요한 작업을 자동화
+- 타입스크립트 프로젝트 배표시 필요한 작업을 자동화
 
 #### 타입스크립트 프로젝트 배포시 필요한 작업
 
-- 타입 체크 및 ts -> js로 변환하는 컴파일 (TSC)
+- 타입 체크 및 ts -> js로 변환하는 컴파일(TSC)
 - 트랜스파일링: ES6+ 문법을 지원하지 않는 구 버전의 브라우저를 위해 ES5 수준의 코드로 변환 (TSC)
-- 번들링: 여러 javascript 모듈을 하나 또는 몇개의 javascript 파일로 묶는 작업 (Vite(Rollup 기반))
-- 압축: 주석 제거, 변수명 축약, 화이트 스페이스 제거 (Vite(Rollup 기반))
-- css 파일도 번들링, 압축됨 (Vite(Rollup 기반))
+- 번들링: 여러 javascript 모듈을 하나 또는 몇개의 javascript 파일로 묶는 작업 (Vite, Rollup)
+- 압축: 주석 제거, 변수명 축약, 화이트 스페이스 제거 (Vite, Rollup)
+- css 파일도 번들링, 압축됨 (Vite, Rollup)
 
 ### 프로젝트 생성
 
@@ -63,12 +61,6 @@ npm install
 
 ## 자바스크립트 프로젝트 복사
 
-### 정적인 파일 복사 (html, css, 이미지)
-
-- 02.typescript/todoapp/index.html 파일 삭제
-- 삭제한 index.html 위치에 01.javascript/todoapp/index.html 파일을 복사
-- 01.javascript/todoapp/assets/css, img 폴더를 02.typescript/todoapp/public 폴더로 복사
-
 ### 자바스크립트 파일 복사
 
 - 02.typescript/todoapp/src 폴더 하위의 샘플 파일 삭제
@@ -78,12 +70,25 @@ npm install
   - typescript.svg
 - 01.javascript/todoapp/assets/js 하위의 모든 파일과 폴더를 02.typescript/todoapp/src 폴더로 복사
 
+### 정적인 파일 복사 (html, css, 이미지)
+
+- 01.javascript/todoapp/index.html 파일을 02.typescript/todoapp/index.html 삭제 후 복사
+- 01.javascript/todoapp/assets/img 폴더를 02.typescript/todoapp/public 폴더로 복사
+- 01.javascript/todoapp/assets/css 폴더의 css 파일을 각 페이지 모듈 폴더로 복사
+  - index.css -> index.html과 같은 경로
+  - todolist.css -> src/page/list/TodoList.js와 같은 경로
+
 ### index.html 수정
 
 - <link> 태그에서 assets 경로 제거
 
 ```
 <link rel="icon" href="/img/favicon.ico" />
+```
+
+- css 파일 링크 삭제
+
+```
 <link href="/css/index.css" rel="stylesheet">
 <link href="/css/todolist.css" rel="stylesheet">
 ```
@@ -102,15 +107,15 @@ npm install
 npm run dev
 ```
 
-- 개발 서버 접속
+- 출력된 접속 정보 확인해서 개발 서버 접속
   - 기본 포트는 5173으로 구동되고 해당 포트가 사용중일 경우 번호가 하나씩 증가
   - http://localhost:5173/
 - HMR (Hot Module Replacement) 지원됨
 
 #### 기능 테스트
 
-- TODO App의 모든 기능 테스트
-- 개발자 도구의 network 탭에서 css 파일이나 이미지 파일에 대해 404 에러가 발생하는 경우 경로 확인 후 수정
+- 모든 기능 테스트
+- 개발자 도구의 network 탭에서 css 파일이나 이미지 파일에 404 에러가 발생하는 경우 경로 확인 후 수정
 
 ## 타입스크립트로 리팩토링 (공통 파일)
 
@@ -128,6 +133,12 @@ npm run dev
 #### 파일 확장자 변경
 
 - src/index.js -> src/index.ts로 수정
+
+#### css 파일 import
+
+```
+import './index.css';
+```
 
 #### import 구문 수정
 
@@ -214,10 +225,28 @@ interface TodoResponse {
 
 - pages/list/Todolist.js -> Todolist.ts로 수정
 
+#### css 파일 import
+
+```
+import './todolist.css';
+```
+
+#### axios 모듈 설치
+
+```
+npm i axios
+```
+
 #### axios 모듈 추가
 
 ```
 import axios from 'axios';
+```
+
+#### index.html에서 axios 제거
+
+```
+<script src="https://unpkg.com/axios@1.6.0/dist/axios.min.js"></script>
 ```
 
 #### axios 요청에 타입 추가
@@ -226,6 +255,6 @@ import axios from 'axios';
 response = await axios<TodoListResponse>('http://localhost:33088/api/todolist');
 ```
 
-#### 그밖의 컴파일 에러 수정
+#### 컴파일 에러 수정
 
 ### 나머지 파일 수정
