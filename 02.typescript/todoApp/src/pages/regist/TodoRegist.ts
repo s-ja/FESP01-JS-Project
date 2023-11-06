@@ -4,8 +4,9 @@ import Footer from "../../layout/Footer";
 import { linkTo } from "../../Router.ts";
 import axios from "axios";
 
-const TodoRegist = function () {
+import createElem from "../../utils/CreateElem";
 
+const TodoRegist = function () {
   const page = document.createElement("div");
   page.setAttribute("id", "page");
 
@@ -14,20 +15,47 @@ const TodoRegist = function () {
 
   const form = createElem(content, "form", "", ["id", "form"]);
 
-  const fieldset = createElem(form, "fieldset", "", ["id", "fieldset"])
+  const fieldset = createElem(form, "fieldset", "", ["id", "fieldset"]);
 
-  const input = createElem(fieldset, "input", "", ["id", "input"], ["type", "text"], ["name", "title"], ["placeholder", "제목을 입력해주세요."], ["required", "true"]);
+  const input = createElem(
+    fieldset,
+    "input",
+    "",
+    ["id", "input"],
+    ["type", "text"],
+    ["name", "title"],
+    ["placeholder", "제목을 입력해주세요."],
+    ["required", "true"]
+  );
 
-  const textarea = createElem(fieldset, "textarea", "", ["id", "textarea"], ["type", "text"], ["name", "content"], ["placeholder", "내용을 입력해주세요."], ["required", "true"]);
+  const textarea = createElem(
+    fieldset,
+    "textarea",
+    "",
+    ["id", "textarea"],
+    ["type", "text"],
+    ["name", "content"],
+    ["placeholder", "내용을 입력해주세요."],
+    ["required", "true"]
+  );
 
-  const newRegister = createElem(fieldset, "button", "등록 완료", ["id", "buttonCommon"], ["type", "submit"], ["class", "newRegister"]);
+  const newRegister = createElem(
+    fieldset,
+    "button",
+    "등록 완료",
+    ["id", "buttonCommon"],
+    ["type", "submit"],
+    ["class", "newRegister"]
+  );
 
   const modal = createElem(page, "div", "", ["class", "modal"]);
 
-  const modalContent = createElem(modal, "div", "할일이 등록되었습니다!", ["class", "modal-content"]);
+  const modalContent = createElem(modal, "div", "할일이 등록되었습니다!", [
+    "class",
+    "modal-content",
+  ]);
 
   form.addEventListener("submit", async function (event) {
-
     event.preventDefault();
 
     const titleInput = input as HTMLInputElement;
