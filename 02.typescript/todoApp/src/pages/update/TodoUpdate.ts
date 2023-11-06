@@ -3,25 +3,7 @@ import { linkTo } from '../../Router';
 import Header from '../../layout/Header';
 import Footer from '../../layout/Footer';
 
-const createElem = (
-  parent: HTMLElement,
-  tagName: string,
-  txt: string = '',
-  ...attributes: [string, string][]
-) => {
-  const element = document.createElement(tagName);
-
-  attributes.forEach(([attrName, attrValue]) => {
-    element.setAttribute(attrName, attrValue);
-  });
-
-  if (txt) {
-    element.textContent = txt;
-  }
-
-  parent.appendChild(element);
-  return element; // 생성된 요소 반환
-};
+import createElem from '../../utils/CreateElem';
 
 const TodoUpdate = async function () {
   const _id = new URLSearchParams(location.search).get('_id');

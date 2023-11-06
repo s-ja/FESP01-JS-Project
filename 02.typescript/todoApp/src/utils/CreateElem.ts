@@ -1,7 +1,7 @@
 const createElem = (
   parent: HTMLElement,
   tagName: string,
-  txt: string = "",
+  txt: string = '',
   ...attributes: [string, string][]
 ) => {
   const element = document.createElement(tagName);
