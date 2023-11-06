@@ -1,10 +1,31 @@
 // 할일 등록
 import axios from "axios";
-
 import Header from "../../layout/Header";
 import Footer from "../../layout/Footer";
-
 import createElem from "../../utils/CreateElem";
+
+const fetchTodoItem = async (_id: string): Promise<TodoItem> => {
+  try {
+    const response = await axios.get<TodoItem>(
+      `http://localhost:33088/api/todolist/${_id}`
+    );
+    console.log(response.data);
+
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to fetch the todo item.");
+  }
+};
+
+const deleteTodoItem = async (_id: string): Promise<void> => {
+  try {
+    await axios.delete(`http://localhost:33088/api/todolist/${_id}`);
+    alert("삭제되었습니다.");
+    window.location.href = "/"; // 페이지를 루트로 리다이렉션
+  } catch (error) {
+    alert("삭제에 실패했습니다.");
+  }
+};
 
 const TodoInfo = async function () {
   const params = new URLSearchParams(location.search);
