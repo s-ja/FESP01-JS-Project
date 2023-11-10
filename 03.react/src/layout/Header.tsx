@@ -8,17 +8,17 @@ const Header = () => {
   const [pathName, setPathName] = useState('');
 
   useEffect(() => {
-    switch (location.pathname) {
-      case '/':
+    switch (location.pathname.split('/')[1]) {
+      case '':
         setPathName('목록조회');
         return;
-      case '/info':
+      case 'info':
         setPathName('상세정보');
         return;
-      case '/update':
+      case 'update':
         setPathName('수정하기');
         return;
-      case '/regist':
+      case 'regist':
         setPathName('등록하기');
         return;
     }
