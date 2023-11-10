@@ -1,30 +1,30 @@
-import { createBrowserRouter } from 'react-router-dom';
-import App from './App';
-import Error404 from './pages/error/Error404';
-import TodoInfo from './pages/info/TodoInfo';
-import TodoList from './pages/list/TodoList';
-import TodoRegist from './pages/regist/TodoRegist';
-import TodoUpdate from './pages/update/TodoUpdate';
+import { createBrowserRouter } from "react-router-dom";
+import App from "./App";
+import Error404 from "./pages/error/Error404";
+import TodoInfo from "./pages/info/TodoInfo";
+import TodoList from "./pages/list/TodoList";
+import TodoRegist from "./pages/regist/TodoRegist";
+import TodoUpdate from "./pages/update/TodoUpdate";
 
 const router = createBrowserRouter([
   {
-    path: '',
+    path: "",
     element: <App />,
     children: [
       {
-        path: '/',
+        path: "/",
         element: <TodoList />,
       },
       {
-        path: '/info',
+        path: "/info",
         element: <TodoInfo />,
       },
       {
-        path: '/regist',
+        path: "/regist",
         element: <TodoRegist />,
       },
       {
-        path: '/update',
+        path: "/update/:_id",
         element: <TodoUpdate />,
       },
     ],
