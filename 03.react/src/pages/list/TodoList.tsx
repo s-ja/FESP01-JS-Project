@@ -50,7 +50,7 @@ const TodoList = () => {
               <input type="checkbox" id="checkbox" className={todoItem.done ? 'done' : ''} />
               {todoItem.done ? <RedArrowIcon /> : null}
             </div>
-            <Link to={'/info'}>{todoItem.title}</Link>
+            <Link to={`/info?_id=${todoItem._id}`}>{todoItem.title}</Link>
           </TodoItem>
         ))}
       </ul>
