@@ -58,7 +58,7 @@ const TodoInfo = () => {
         <p>updated at: {todoItem?.updatedAt}</p>
       </DetailMain>
       <DetailFooter>
-        <Link to={`/update?_id=${todoItem?._id}`}>수정</Link>
+        <Link to={`/update/${todoItem?._id}`}>수정</Link>
         <button onClick={() => handleDelete(todoItem?._id)}>삭제</button>
       </DetailFooter>
     </DetailContainer>
