@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         element: <TodoRegist />,
       },
       {
-        path: '/update',
+        path: '/update/:_id',
         element: <TodoUpdate />,
       },
     ],
