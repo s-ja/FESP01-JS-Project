@@ -110,7 +110,7 @@ const TodoUpdate = () => {
     fetchTodo();
   }, [_id]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await axios.patch(`http://localhost:33088/api/todolist/${_id}`, {

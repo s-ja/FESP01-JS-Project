@@ -51,7 +51,7 @@ const TodoList = () => {
       if (sortType === 'done') {
         return a.done === b.done ? 0 : a.done ? -1 : 1;
       } else if (sortType === 'update') {
-        return new Date(b.updatedAt) - new Date(a.updatedAt);
+        return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
       }
       return 0;
     });
