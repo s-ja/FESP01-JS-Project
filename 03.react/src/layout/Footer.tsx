@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Footer = () => {
-  return <FooterContent>FESP 1기 Javascript Project</FooterContent>;
+  return <FooterContent>FESP 1기 React Project</FooterContent>;
 };
 
 export default Footer;

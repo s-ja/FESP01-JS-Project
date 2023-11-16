@@ -60,7 +60,11 @@ const TodoList = () => {
     <TodoListContainer>
       <FunctionWrapper>
         <form action="">
-          <input type="text" onChange={(e) => setSearchTerm(e.target.value)} />{' '}
+          <input
+            type="text"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="search keyword"
+          />
         </form>
         <div>
           <button onClick={() => setSortType('done')}>by Done</button>
