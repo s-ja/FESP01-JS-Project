@@ -6,6 +6,10 @@ import RedArrowIcon from '@/assets/RedArrowIcon';
 
 const TodoList = () => {
   const [todoList, setTodoList] = useState<TodoItem[]>([]);
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortType, setSortType] = useState('');
+
   const getTodoList = async () => {
     try {
       const response = await axios.get<TodoListResponse>('http://localhost:33088/api/todolist');
@@ -41,21 +45,30 @@ const TodoList = () => {
     getTodoList();
   }, []);
 
+  const filteredAndSortedTodoList = todoList
+    .filter((todoItem) => todoItem.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    .sort((a, b) => {
+      if (sortType === 'done') {
+        return a.done === b.done ? 0 : a.done ? -1 : 1;
+      } else if (sortType === 'update') {
+        return new Date(b.updatedAt) - new Date(a.updatedAt);
+      }
+      return 0;
+    });
+
   return (
     <TodoListContainer>
       <FunctionWrapper>
         <form action="">
-          <input type="text" />
-          <button type="submit">search</button>
+          <input type="text" onChange={(e) => setSearchTerm(e.target.value)} />{' '}
         </form>
-        <span>filter</span>
         <div>
-          <button>by Done</button>
-          <button>by Update Date</button>
+          <button onClick={() => setSortType('done')}>by Done</button>
+          <button onClick={() => setSortType('update')}>by Update</button>
         </div>
       </FunctionWrapper>
       <ul>
-        {todoList?.map((todoItem) => (
+        {filteredAndSortedTodoList.map((todoItem) => (
           <TodoItem key={todoItem._id} className={todoItem.done ? 'done' : ''}>
             <div onClick={() => toggleCheckbox(todoItem._id, todoItem.done)}>
               <input type="checkbox" id="checkbox" className={todoItem.done ? 'done' : ''} />
@@ -74,9 +87,43 @@ export default TodoList;
 
 const FunctionWrapper = styled.div`
   display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 30px;
+
+  button {
+    all: unset;
+    cursor: pointer;
+  }
 
   form {
     display: flex;
+    gap: 10px;
+    > input {
+      border-radius: 5px;
+      border: 0;
+    }
+    > button {
+      border-radius: 5px;
+      border: 0;
+      background-color: white;
+      cursor: pointer;
+      padding: 5px;
+      line-height: 100%;
+    }
+  }
+
+  div {
+    display: flex;
+    gap: 5px;
+    > button {
+      background-color: #9f9f9f;
+      font-weight: bold;
+      color: #9c0000;
+      font-size: 0.8em;
+      border-radius: 5px;
+      padding: 0 2px;
+    }
   }
 `;
 
