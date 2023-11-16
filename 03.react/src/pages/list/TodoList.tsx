@@ -43,6 +43,17 @@ const TodoList = () => {
 
   return (
     <TodoListContainer>
+      <FunctionWrapper>
+        <form action="">
+          <input type="text" />
+          <button type="submit">search</button>
+        </form>
+        <span>filter</span>
+        <div>
+          <button>by Done</button>
+          <button>by Update Date</button>
+        </div>
+      </FunctionWrapper>
       <ul>
         {todoList?.map((todoItem) => (
           <TodoItem key={todoItem._id} className={todoItem.done ? 'done' : ''}>
@@ -60,6 +71,14 @@ const TodoList = () => {
 };
 
 export default TodoList;
+
+const FunctionWrapper = styled.div`
+  display: flex;
+
+  form {
+    display: flex;
+  }
+`;
 
 const TodoListContainer = styled.div`
   position: relative;

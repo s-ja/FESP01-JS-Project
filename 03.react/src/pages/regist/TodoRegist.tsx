@@ -18,27 +18,27 @@ const Form = styled.form`
 `;
 
 const FieldSet = styled.fieldset`
-display: flex;
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 0;
   border: 0;
   row-gap: 10px;
-  height: 90%;
+  height: 100%;
   font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
 
-  & > ::placeholder{
-  color: #555555;
-  font-size: 18px;
-  font-weight: 900;
-  text-align: center;
+  & > ::placeholder {
+    color: #555555;
+    font-size: 18px;
+    font-weight: 900;
+    text-align: center;
   }
-`
+`;
 
 const Input = styled.input`
-   width: 360px;
+  width: 100%;
   height: 52px;
   border-radius: 10px;
   border: 0;
@@ -48,7 +48,7 @@ const Input = styled.input`
 
 const Textarea = styled.textarea`
   padding: 15px;
-  width: 360px;
+  width: 100%;
   height: 100%;
   border: 0;
   border-radius: 10px;
@@ -58,15 +58,9 @@ const Textarea = styled.textarea`
 `;
 
 const SubmitButton = styled.button`
-  position: absolute;
-  width: 360px;
-  height: 50px;
-  left: 50%;
-  right: 50%;
-  bottom: 10px;
-  transform: translateX(-50%);
   border-radius: 10px;
   border: 0;
+  padding: 10px;
   font-size: 30px;
   font-weight: bold;
   color: #555555;
@@ -74,7 +68,7 @@ const SubmitButton = styled.button`
 `;
 
 const Modal = styled.div`
-    display: none;
+  display: none;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -96,15 +90,15 @@ const TodoRegist = () => {
     event.preventDefault();
 
     try {
-      await axios.post("http://localhost:33088/api/todolist", { title, content });
+      await axios.post('http://localhost:33088/api/todolist', { title, content });
       setShowModal(true);
       setTimeout(() => {
         setShowModal(false);
-        navigate("/");
+        navigate('/');
       }, 500);
     } catch (error) {
       console.error(error);
-      alert("등록에 실패하였습니다.");
+      alert('등록에 실패하였습니다.');
     }
   };
 
@@ -112,23 +106,23 @@ const TodoRegist = () => {
     <Content>
       <Form onSubmit={handleSubmit}>
         <FieldSet>
-        <Input
-          type="text"
-          name="title"
-          placeholder="제목을 입력해주세요."
-          required
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <Textarea
-          name="content"
-          placeholder="내용을 입력해주세요."
-          required
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-        />
+          <Input
+            type="text"
+            name="title"
+            placeholder="제목을 입력해주세요."
+            required
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <Textarea
+            name="content"
+            placeholder="내용을 입력해주세요."
+            required
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          />
+          <SubmitButton type="submit">등록 완료</SubmitButton>
         </FieldSet>
-        <SubmitButton type="submit">등록 완료</SubmitButton>
       </Form>
       {showModal && <Modal>할일이 등록되었습니다!</Modal>}
     </Content>

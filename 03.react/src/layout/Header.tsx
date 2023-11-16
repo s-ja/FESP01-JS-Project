@@ -35,6 +35,13 @@ const Header = () => {
 export default Header;
 
 const HeaderTitle = styled.header`
+
+    font-weight: 900;
+    font-size: 68px;
+    weight: 900;
+    margin-top: 80px;
+    cursor: pointer;
+    
   & a {
     margin-top: 80px;
     color: black
