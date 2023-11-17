@@ -56,6 +56,11 @@ const TodoList = () => {
       return 0;
     });
 
+  const resetListDisplay = () => {
+    setSearchTerm('');
+    setSortType('');
+  };
+
   return (
     <TodoListContainer>
       <FunctionWrapper>
@@ -69,6 +74,7 @@ const TodoList = () => {
         <div>
           <button onClick={() => setSortType('done')}>by Done</button>
           <button onClick={() => setSortType('update')}>by Update</button>
+          <button onClick={resetListDisplay}>Reset</button>
         </div>
       </FunctionWrapper>
       <ul>
@@ -94,6 +100,7 @@ const FunctionWrapper = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 30px;
+  margin-bottom: 10px;
 
   button {
     all: unset;
@@ -132,6 +139,9 @@ const FunctionWrapper = styled.div`
 `;
 
 const TodoListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   position: relative;
   width: 100%;
   padding: 10px;
@@ -142,10 +152,10 @@ const TodoListContainer = styled.div`
   ul {
     margin: 0;
     padding: 0;
-    overflow: auto;
     height: 90%;
+    overflow: auto;
     border-radius: 5px;
-    margin-top: 5px;
+    margin-bottom: 10px;
   }
 `;
 
@@ -199,13 +209,13 @@ const TodoItem = styled.li`
 `;
 
 const RegistButton = styled(Link)`
-  position: absolute;
-  left: 50%;
-  right: 50%;
-  bottom: 10px;
-  transform: translateX(-50%);
+  //   position: absolute;
+  //   left: 50%;
+  //   right: 50%;
+  //   bottom: 10px;
+  //   transform: translateX(-50%);
 
-  width: 360px;
+  width: 100%;
   padding: 10px 0;
   border-radius: 10px;
   border: 0;
